@@ -1,0 +1,11 @@
+{
+  "noupdate": "No updates",
+  "plugins": "plugins",
+  "updated": "updated",
+  "noperm": "§4Не достаточно прав",
+  "error": "Error",
+  "download": "download",
+  "listinstall": "list install",
+  "autoupdater": "AutoUpdater",
+  "plugin": "plugin"
+}
