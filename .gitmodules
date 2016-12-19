@@ -1,8 +1,0 @@
-[submodule "lang_RU"]
-	path = INFOMCPE/lang/ru.json	
-  url = https://github.com/INFOMCPE/INFOMCPE/blob/master/lang/ru.json
-[submodule "lang_EN"]
-	path = INFOMCPE/lang/en.json	
-  url = https://github.com/INFOMCPE/INFOMCPE/blob/master/lang/en.json
-  
-  
