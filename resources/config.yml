@@ -14,7 +14,7 @@
 #↓Set language available: ru, en
 #↓выбор языка доступно: ru, en
 lang: ru
-#↓Service available: infomcpe.ru, pocketmine.net
-#↓Выбор сервиса доступно: infomcpe.ru, pocketmine.net
+#↓Service available: infomcpe.ru, pocketmine.net, imagicalmine.net
+#↓Выбор сервиса доступно: infomcpe.ru, pocketmine.net, imagicalmine.net
 service: infomcpe.ru
 ...
