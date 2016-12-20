@@ -108,6 +108,10 @@ public function getServiceUrl(){
 			$url = "http://forums.pocketmine.net/api.php";
 		return $url;
 		}
+		if($service[0] = "imagicalmine.net"){
+			$url = "https://www.imagicalmine.net/community/api.php?action=getResources";
+			return $url;
+		}
 	}
 public function getServiceDirectory(){
 	$service = explode(", ", $this->getConfig()->get("service"));
@@ -117,6 +121,10 @@ public function getServiceDirectory(){
 		}
 		if($service[0] = "pocketmine.net"){
 			$url = "http://forums.pocketmine.net/plugins";
+			return $url;
+		}
+		if($service[0] = "imagicalmine.net"){
+			$url = "https://www.imagicalmine.net/community/plugins/";
 			return $url;
 		}
 	}
