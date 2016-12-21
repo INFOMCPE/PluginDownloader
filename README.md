@@ -1,6 +1,7 @@
-
+#PluginDownloader
+![3](https://pp.vk.me/c637419/v637419272/27982/vfTVilXWdYA.jpg)
 ***
-### Plugin description:
+## Plugin description:
  Plug-in adds a command "plugin" that allows to download plugins from the resource that you enter in the config
 More details on the screenshot:
 
