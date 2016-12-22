@@ -11,6 +11,8 @@ use pocketmine\utils\Config;
 use pocketmine\plugin\Plugin;
 use pocketmine\Server;
 use pocketmine\plugin\PluginDescription;
+use infomcpe\CheckVersionTask;
+use infomcpe\UpdaterTask;
 
 class PluginDownloader extends PluginBase{
 	
@@ -19,18 +21,22 @@ class PluginDownloader extends PluginBase{
 
 	public function onEnable(){
 		$this->saveDefaultConfig();
+		$this->getServer()->getScheduler()->scheduleAsyncTask(new CheckVersionTask($this));
     }
 
 	public function onDisable(){
 	}
-
+public function update(){
+		    $this->getServer()->getScheduler()->scheduleTask(new UpdaterTask($this, $this->getDescription()->getVersion()));
+	  }
+	
 	public function onCommand(CommandSender $sender, Command $command, $label, array $args){
-		
+		 
 		switch($command->getName()){
          
       case "plugin":
 if(count($args) == 0){
-$sender->sendMessage("§9§l—————§ePlugin§aDownloader§9—————\n§6/plugin download - §f{$this->lang("download")} {$this->lang("plugin")} \n§6/plugin pluginlist - §f{$this->lang("listinstall")} {$this->lang("plugins")}\n§6/plugin update - §f {$this->lang("autoupdater")}\n§9§l—————§ePlugin§aDownloader§9—————");
+$sender->sendMessage("§9§l—————§ePlugin§aDownloader§9—————\n§6/plugin download - §f{$this->lang("download")} {$this->lang("plugin")} \n§6/plugin pluginlist - §f{$this->lang("listinstall")} {$this->lang("plugins")}\n§6/plugin update - §f {$this->lang("autoupdater")}\n§6/plugin reload - §f{$this->lang("reloadconfig")}\n§9§l—————§ePlugin§aDownloader§9—————");
 }
 error_reporting(0);
 
@@ -38,7 +44,7 @@ error_reporting(0);
      
       case "download":
       if($sender->hasPermission("plugin.download")){
-                $data = json_decode(file_get_contents("{$this->getServiceUrl()}"), true);
+                $data = json_decode($this->curl_get_contents("{$this->getServiceUrl()}"), true);
                 foreach($data["resources"] as $plugin){
                     if(strtolower($args[1]) == strtolower($plugin["title"])){
                         $file = Utils::getURL("{$this->getServiceDirectory()}/{$plugin['id']}/download?version={$plugin['version_id']}");
@@ -72,12 +78,19 @@ error_reporting(0);
      	$sender->sendMessage($this->lang("noperm"));
      	}
      break;
-     
+     case "reload":
+     if($sender->hasPermission("plugin.reload")){
+     $this->reloadConfig();
+     $sender->sendMessage($this->lang("reloaded"));
+     }else{
+     	$sender->sendMessage($this->lang("noperm"));
+     	}
+     break;
 	}
 }
 }
 public function autoupdate($player){
-	            $data = json_decode(file_get_contents("{$this->getServiceUrl()}"), true);
+	            $data = json_decode($this->curl_get_contents("{$this->getServiceUrl()}"), true);
                 $count = 0;
                 foreach($data["resources"] as $resources){
 	            foreach ($this->getServer()->getPluginManager()->getPlugins() as $plugin) {
@@ -142,4 +155,14 @@ public function install($path, $file){
         $url = json_decode($urlh, true); 
         return $url["{$phrase}"];
 		}
+    public function curl_get_contents($url){
+  $curl = curl_init($url);
+  curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+  curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
+  curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+  curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
+  $data = curl_exec($curl);
+  curl_close($curl);
+  return $data;
+}
 }
