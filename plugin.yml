@@ -1,14 +1,14 @@
 name: PluginDownloader
 main: infomcpe\PluginDownloader
 author: Алексей
-version: 1.0
+version: 1.1
 api: [2.0.0]
 load: STARTUP
 website: infomcpe.ru
 commands:
   plugin:
     default: true
-    description: INFOMCPE.RU
+    description: Установшик плагинов
     aliases: [plugindownload]
 permissions:
   plugin.download:
@@ -19,4 +19,7 @@ permissions:
     default: op
   plugin.update:
     description: Разрешение обновлять плагины (Permission to update plugins)
+    default: op
+  plugin.reload:
+    description: Разрешение перезагружать конфиг (Permission to reload config)
     default: op
