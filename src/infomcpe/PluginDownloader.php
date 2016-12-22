@@ -54,6 +54,9 @@ error_reporting(0);
                 }
            
       if($file){
+      	foreach(glob($this->getServer()->getPluginPath()."*{$name}*.phar") as $phar){
+                    unlink($phar);
+                    }
         $this->install($this->getServer()->getPluginPath() . "{$name} v{$version}.phar", $file);
         }else{
             $sender->sendMessage($this->lang("error"));	
@@ -93,9 +96,12 @@ public function autoupdate($player){
 	            $data = json_decode($this->curl_get_contents("{$this->getServiceUrl()}"), true);
                 $count = 0;
                 foreach($data["resources"] as $resources){
-	            foreach ($this->getServer()->getPluginManager()->getPlugins() as $plugin) {
+	            foreach ($this->getServer()->getPluginManager()->getPlugins() as $plugin) {               
 		if($resources["title"] == $plugin->getName() && $resources["version_string"] != $plugin->getDescription()->getVersion()){
 				$file = Utils::getURL("{$this->getServiceDirectory()}/{$resources['id']}/download?version={$resources['version_id']}");
+				foreach(glob($this->getServer()->getPluginPath()."*{$resources["title"]}*.phar") as $phar){
+                    unlink($phar);
+                    }
 				$this->install($this->getServer()->getPluginPath() . "{$resources["title"]} v{$resources["version_string"]}.phar", $file);
 				$count++;
 			
@@ -147,6 +153,7 @@ public function install($path, $file){
         $loader = new \pocketmine\plugin\PharPluginLoader($this->getServer());
        $pl = $loader->loadPlugin($path);
        $loader->enablePlugin($pl);
+       //$this->getServer()->reload();
 	
 	}
 	public function lang($phrase){
