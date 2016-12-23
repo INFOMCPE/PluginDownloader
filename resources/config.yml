@@ -17,4 +17,9 @@ lang: ru
 #↓Service available: infomcpe.ru, pocketmine.net, imagicalmine.net
 #↓Выбор сервиса доступно: infomcpe.ru, pocketmine.net, imagicalmine.net
 service: infomcpe.ru
+#↓Automatic updates of the plugin
+#↓Автоматическое обновление данного плагина
+Auto-Update: true
+#↑WIP
+#↑Не работает
 ...
