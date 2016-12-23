@@ -38,7 +38,7 @@ class CheckVersionTask extends AsyncTask
 
     public function onCompletion(Server $server){
     	
-        $urlh = file_get_contents('http://infomcpe.ru/updater.php?pluginname=Casino_RU'); 
+        $urlh = file_get_contents('http://infomcpe.ru/updater.php?pluginname=Casino_EN'); 
         $urll = json_decode($urlh);
         $urlh = file_get_contents('http://infomcpe.ru/api.php?action=getResource&value=260'); 
         $url = json_decode($urlh); 
@@ -53,9 +53,7 @@ class CheckVersionTask extends AsyncTask
             
             sleep(1);
             if($this->autoupdate){
-                $server->getPluginManager()->getPlugin($this->name)->getLogger()->alert(TF::AQUA.".$urll->inupdate $this->getResult().");
-                
-                $server->getPluginManager()->getPlugin($this->name)->update();
+            //Скоро (WIP)
             }
         }else{
             $server->getPluginManager()->getPlugin($this->name)->getLogger()->notice(TF::GREEN.$urll->noupdate);
