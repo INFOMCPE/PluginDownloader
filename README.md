@@ -1,4 +1,4 @@
-#PluginDownloader
+#PluginDownloader ![4](https://poggit.pmmp.io/ci.badge/INFOMCPE/PluginDownloader/PluginDownloader)
 ![3](https://pp.vk.me/c637419/v637419272/27ccc/4Si95EnpgrQ.jpg)
 ***
 ## Plugin description:
