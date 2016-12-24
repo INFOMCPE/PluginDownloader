@@ -2,7 +2,7 @@
   "noupdate": "No updates",
   "plugins": "plugins",
   "updated": "updated",
-  "noperm": "§4Не достаточно прав",
+  "noperm": "§4Insufficient permissions",
   "error": "Error",
   "download": "download",
   "listinstall": "list install",
