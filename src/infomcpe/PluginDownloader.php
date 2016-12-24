@@ -156,7 +156,7 @@ public function install($path, $file){
 	}
 	public function lang($phrase){
 		$lang = $this->getConfig()->get("lang");
-        $urlh = file_get_contents("http://infomcpe.ru/localizer.php?lang={$lang}"); 
+        $urlh =  $this->curl_get_contents("https://raw.githubusercontent.com/INFOMCPE/PluginDownloader/master/lang{$lang}.json"); 
         $url = json_decode($urlh, true); 
         return $url["{$phrase}"];
 		}
