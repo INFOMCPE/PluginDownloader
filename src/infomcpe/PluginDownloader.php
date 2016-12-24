@@ -1,5 +1,4 @@
-<?php
-
+<?php 
 namespace infomcpe;
 
 use pocketmine\plugin\PluginBase;
