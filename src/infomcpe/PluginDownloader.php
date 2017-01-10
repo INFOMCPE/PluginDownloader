@@ -125,7 +125,7 @@ public function getServiceUrl(){
 		return $url;
 		}
 		if($service[0] = "imagicalmine.net"){
-			$url = "https://www.imagicalmine.net/community/api.php?action=getResources";
+			$url = "https://www.imagicalmine.gq/community/api.php?action=getResources";
 			return $url;
 		}
 	}
@@ -140,7 +140,7 @@ public function getServiceDirectory(){
 			return $url;
 		}
 		if($service[0] = "imagicalmine.net"){
-			$url = "https://www.imagicalmine.net/community/plugins/";
+			$url = "https://www.imagicalmine.gq/community/plugins/";
 			return $url;
 		}
 	}
