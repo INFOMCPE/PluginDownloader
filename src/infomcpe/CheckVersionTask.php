@@ -11,17 +11,18 @@ use pocketmine\Server;
 
 class CheckVersionTask extends AsyncTask
 {
-    public function __construct($owner){
+    public function __construct($owner, $id){
         $this->name = $owner->getDescription()->getName();
         $this->cversion = $owner->getDescription()->getVersion();
         $this->website = $owner->getDescription()->getWebsite();
         $this->autoupdate = $owner->getConfig()->get('Auto-Update');
         $this->path = $owner->getDataFolder();
+        $this->id = $id;
         
     }
 
     public function onRun(){
-    	$urlh = file_get_contents('http://infomcpe.ru/api.php?action=getResource&value=260'); 
+    	$urlh = file_get_contents('http://infomcpe.ru/api.php?action=getResource&value='.$this->id); 
         $url = json_decode($urlh); 
         $nversion = $url->version_string;
         
@@ -40,9 +41,7 @@ class CheckVersionTask extends AsyncTask
     	
         $urlh = file_get_contents('http://infomcpe.ru/updater.php?pluginname=Casino_EN'); 
         $urll = json_decode($urlh);
-        $urlh = file_get_contents('http://infomcpe.ru/api.php?action=getResource&value=260'); 
-        $url = json_decode($urlh); 
-       
+        
    
         if($this->getResult() == 'Empty'){
             $server->getPluginManager()->getPlugin($this->name)->getLogger()->error(TF::RED.'Could not check for Update: "Empty Response" !');
