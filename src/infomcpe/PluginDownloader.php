@@ -20,7 +20,7 @@ class PluginDownloader extends PluginBase{
 
 	public function onEnable(){
 		$this->saveDefaultConfig();
-		$this->getServer()->getScheduler()->scheduleAsyncTask(new CheckVersionTask($this));
+		$this->getServer()->getScheduler()->scheduleAsyncTask(new CheckVersionTask($this, '260'));
     }
 
 	public function onDisable(){
