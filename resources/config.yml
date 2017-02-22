@@ -11,8 +11,8 @@
 #█████████████████─────────────────────────────██████████████████████████████████████─────────────────
 
 
-#↓Set language available: ru, en, jp
-#↓выбор языка доступно: ru, en, jp
+#↓Set language available: ru, en
+#↓выбор языка доступно: ru, en
 lang: ru
 #↓Service available: infomcpe.ru, pocketmine.net, imagicalmine.net
 #↓Выбор сервиса доступно: infomcpe.ru, pocketmine.net, imagicalmine.net

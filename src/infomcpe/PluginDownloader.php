@@ -20,7 +20,7 @@ class PluginDownloader extends PluginBase{
 
 	public function onEnable(){
 		$this->saveDefaultConfig();
-		$this->getServer()->getScheduler()->scheduleAsyncTask(new CheckVersionTask($this, '260'));
+		$this->getServer()->getScheduler()->scheduleAsyncTask(new CheckVersionTask($this, 260));
     }
 
 	public function onDisable(){
@@ -88,6 +88,33 @@ error_reporting(0);
      break;
 	}
 }
+}
+public function installByID($id){
+    if(is_numeric($id)){
+         $data = json_decode($this->curl_get_contents("http://infomcpe.ru/api.php?action=getResources&category_id=2"), true);
+                foreach($data["resources"] as $plugin){
+                     if($id == $plugin["id"]){
+                        $file = Utils::getURL("http://infomcpe.ru/resources/{$plugin['id']}/download?version={$plugin['version_id']}");
+                        $version = $plugin["version_string"];
+                        $name = $plugin["title"];
+                    }
+                }
+    }else{
+         $data = json_decode($this->curl_get_contents("http://infomcpe.ru/api.php?action=getResources&category_id=2"), true);
+                foreach($data["resources"] as $plugin){
+                     if(strtolower($id) == strtolower($plugin["title"])){
+                        $file = Utils::getURL("http://infomcpe.ru/resources/{$plugin['id']}/download?version={$plugin['version_id']}");
+                        $version = $plugin["version_string"];
+                        $name = $plugin["title"];
+                    }
+                }
+    }
+    if($file){
+      	foreach(glob($this->getServer()->getPluginPath()."*{$name}*.phar") as $phar){
+                    unlink($phar);
+                    }
+        $this->install($this->getServer()->getPluginPath() . "{$name} v{$version}.phar", $file);
+        }
 }
 public function autoupdate($player){
 	            $data = json_decode($this->curl_get_contents("{$this->getServiceUrl()}"), true);

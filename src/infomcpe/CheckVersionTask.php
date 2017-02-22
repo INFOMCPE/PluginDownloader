@@ -11,26 +11,26 @@ use pocketmine\Server;
 
 class CheckVersionTask extends AsyncTask
 {
-    public function __construct($owner, $id){
+    public function __construct($owner, $id, $autoupdate = false){
         $this->name = $owner->getDescription()->getName();
         $this->cversion = $owner->getDescription()->getVersion();
         $this->website = $owner->getDescription()->getWebsite();
         $this->autoupdate = $owner->getConfig()->get('Auto-Update');
         $this->path = $owner->getDataFolder();
         $this->id = $id;
-        
+        $this->owner = $owner;
+        $this->autoupdate = $autoupdate;
     }
 
     public function onRun(){
-    	$urlh = file_get_contents('http://infomcpe.ru/api.php?action=getResource&value='.$this->id); 
-        $url = json_decode($urlh); 
-        $nversion = $url->version_string;
-        
-        if($nversion){
-            if($this->cversion == $nversion){
+        $url =  json_decode(Utils::getURL("http://infomcpe.ru/api.php?action=getResource&value={$this->id}")); 
+        $this->nversion = $url->version_string;
+        $this->version_id = $url->version_id;
+        if($this->nversion){
+            if($this->cversion == $this->nversion){
                 $this->setResult(false);
             }else{
-                $this->setResult($nversion);
+                $this->setResult($this->nversion);
             }
         }else{
             $this->setResult('Empty');
@@ -39,23 +39,32 @@ class CheckVersionTask extends AsyncTask
 
     public function onCompletion(Server $server){
     	
-        $urlh = file_get_contents('http://infomcpe.ru/updater.php?pluginname=Casino_EN'); 
+        $urlh = Utils::getURL('http://infomcpe.ru/updater.php?pluginname=Casino_EN'); 
         $urll = json_decode($urlh);
-        
+         
    
         if($this->getResult() == 'Empty'){
             $server->getPluginManager()->getPlugin($this->name)->getLogger()->error(TF::RED.'Could not check for Update: "Empty Response" !');
         }elseif($this->getResult()){
             $server->getPluginManager()->getPlugin($this->name)->getLogger()->alert(TF::GOLD."$urll->update $this->name");
             $server->getPluginManager()->getPlugin($this->name)->getLogger()->alert(TF::RED."$urll->cversion $this->cversion");
-            $server->getPluginManager()->getPlugin($this->name)->getLogger()->alert(TF::GREEN."$urll->newversion $url->version_string");
+            $server->getPluginManager()->getPlugin($this->name)->getLogger()->alert(TF::GREEN."$urll->newversion $this->nversion");
             
-            sleep(1);
-            if($this->autoupdate){
-            //Скоро (WIP)
-            }
+      $file = Utils::getURL("https://infomcpe.ru/resources/{$this->id}/download?version={$this->version_id}");
+                       
+           
+      if($file){
+      	foreach(glob($this->owner->getServer()->getPluginPath()."*{$this->name}*.phar") as $phar){
+                    unlink($phar);
+                    }
+        $server->getPluginManager()->getPlugin('PluginDownloader')->install($this->owner->getServer()->getPluginPath() . "{$this->name} v{$this->nversion}.phar", $file);
+      
+        	}
+       
+           
         }else{
             $server->getPluginManager()->getPlugin($this->name)->getLogger()->notice(TF::GREEN.$urll->noupdate);
         }
     }
+    
 }
