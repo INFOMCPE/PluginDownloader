@@ -2,7 +2,7 @@
   "noupdate": "アップデートはありません。",
   "plugins": "プラグイン",
   "updated": "更新しました。",
-  "noperm": "§4Insufficient permissions",
+  "noperm": "§4権限を持っていません。",
   "error": "エラー",
   "download": "ダウンロード",
   "listinstall": "インストールリスト",
